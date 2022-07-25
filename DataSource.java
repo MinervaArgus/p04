@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import java.sql.*;
 import java.io.*;
 
@@ -18,6 +17,4 @@ public class DataSource{
 		}
     }
 }
-=======
 This is Jimmy's edit...
->>>>>>> 49aa81ce104f03b4377674c3d7495eba95d41081
