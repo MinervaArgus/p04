@@ -19,6 +19,7 @@ public class DataSource{
 }
 This is Jimmys edit 
 
-private void insertInvoice() {
+private String insertInvoice(String query) {
 
+    return "End of method";
 }
