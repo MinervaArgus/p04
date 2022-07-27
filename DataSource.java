@@ -7,11 +7,14 @@ public class DataSource{
     public DataSource(String user, String pass){
         
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
+            //Class.forName("oracle.jdbc.driver.OracleDriver");
+            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+            user = "jririe";
+            pass = "mHtq5bXWy4_UGC4";
 			c = DriverManager.getConnection("jdbc:oracle:thin:@Worf.radford.edu:1521:itec3", user, pass);
             System.out.println("Connection created successfully!");
 		} catch (Exception e) {
-			System.out.println("Could not load the database " + e);
+			System.out.println("Could not load the database: " + e);
 		}
     }
 

@@ -8,7 +8,7 @@ public class IO{
         Console cl = System.console();
         //todo: these prompts are only for testing, need to be moved to the IO class
         String user = new String(cl.readPassword("Enter username: "));
-        String pass = new String(cl.readPassword("Enter password for" + user +"@itec3: "));
+        String pass = new String(cl.readPassword("Enter password for " + user +"@itec3: "));
 
         DataSource d = new DataSource(user, pass);
     }
