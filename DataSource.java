@@ -5,7 +5,7 @@ public class DataSource{
     Connection c = null;
 
     public DataSource(){
-        DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+        DriverManager.registerDriver (new oracle.jdbc.driver.OracleDriver());
         Console cl = System.console();
          String user = "jnevins";
          String pass = new String(cl.readPassword("Enter password for" + user +"@itec3: "));
@@ -18,10 +18,13 @@ public class DataSource{
     }
 
 
-private String insertInvoice(String query) {
+// private String insertInvoice(String query) {
+//     CallableStatement insertDog = c.prepareCall("{call insertDog(?,?,?,?,?)}");
+//     insertDog.setInt(1, 122);
+//     insertDog.setString("aname", "Astroid" );
 
-    return "End of method";
-}
+//     return "End of method";
+// }
 
 private void close(){
     try{
