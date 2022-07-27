@@ -2,24 +2,35 @@ import java.sql.*;
 import java.io.*;
 
 public class DataSource{
-    static Connection c = null;
+    Connection c = null;
 
     public DataSource(){
         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
         Console cl = System.console();
-         String user = 'jnevins';
-         String pass = new String(cl.readPassword("Enter password for jririe@itec3: "));
+         String user = "jnevins";
+         String pass = new String(cl.readPassword("Enter password for" + user +"@itec3: "));
 
          try {
 			c = DriverManager.getConnection("jdbc:oracle:thin:@Worf.radford.edu:1521:itec3", user, pass);
-		} catch (SQLException e) {
-			System.out.println("Could not load the db " + e);
+		} catch (SQLException x) {
+			System.out.println("Could not load the database" + x);
 		}
     }
-}
-This is Jimmys edit 
+
 
 private String insertInvoice(String query) {
 
     return "End of method";
+}
+
+private void close(){
+    try{
+        if (c != null){
+            c.close();
+        }
+    }
+    catch (Exception x){
+        System.out.println("Failed to close the connection!" + x);
+    }
+}
 }
