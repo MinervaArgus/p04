@@ -25,7 +25,7 @@ private String insertInvoice(String query) {
         insertDog.setInt(1, 122);
         insertDog.setString(2, "Astroid" );
         insertDog.setInt(3, 301);
-        insertDog.setDate("aDOB", "21-JUL-2052");
+        //insertDog.setDate("aDOB", "21-JUL-2052");
         insertDog.setString(5, "Rottweiler");
         insertDog.execute();
     } catch (SQLException x1){
