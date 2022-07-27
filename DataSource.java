@@ -4,17 +4,14 @@ import java.io.*;
 public class DataSource{
     Connection c = null;
 
-    public DataSource() throws ClassNotFoundException{
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        Console cl = System.console();
-        //todo: these prompts are only for testing, need to be moved to the IO class
-        String user = new String(cl.readPassword("Enter username: "));
-        String pass = new String(cl.readPassword("Enter password for" + user +"@itec3: "));
-
+    public DataSource(String user, String pass){
+        
         try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
 			c = DriverManager.getConnection("jdbc:oracle:thin:@Worf.radford.edu:1521:itec3", user, pass);
-		} catch (SQLException x) {
-			System.out.println("Could not load the database" + x);
+            System.out.println("Connection created successfully!");
+		} catch (Exception e) {
+			System.out.println("Could not load the database " + e);
 		}
     }
 
