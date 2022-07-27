@@ -7,6 +7,7 @@ public class DataSource{
     public DataSource() throws ClassNotFoundException{
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Console cl = System.console();
+        //todo: these prompts are only for testing, need to be moved to the IO class
         String user = new String(cl.readPassword("Enter username: "));
         String pass = new String(cl.readPassword("Enter password for" + user +"@itec3: "));
 
