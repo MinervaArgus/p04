@@ -4,8 +4,8 @@ import java.io.*;
 public class DataSource{
     Connection c = null;
 
-    public DataSource(){
-        DriverManager.registerDriver (new oracle.jdbc.driver.OracleDriver());
+    public DataSource() throws ClassNotFoundException{
+        Class.forName("oracle.jdbc.driver.OracleDriver");
         Console cl = System.console();
          String user = "jnevins";
          String pass = new String(cl.readPassword("Enter password for" + user +"@itec3: "));
@@ -18,13 +18,28 @@ public class DataSource{
     }
 
 
-// private String insertInvoice(String query) {
-//     CallableStatement insertDog = c.prepareCall("{call insertDog(?,?,?,?,?)}");
-//     insertDog.setInt(1, 122);
-//     insertDog.setString("aname", "Astroid" );
+private String insertInvoice(String query) {
+    try{
+        CallableStatement insertDog = c.prepareCall("{call insertDog(?,?,?,?,?)}");
+        insertDog.setInt(1, 122);
+        insertDog.setString(2, "Astroid" );
+        insertDog.setInt(3, 301);
+        insertDog.setDate("aDOB", "21-JUL-2052");
+        insertDog.setString(5, "Rottweiler");
+        insertDog.execute();
+    } catch (SQLException x1){
+        System.out.println("Failed to insert Dog" + x1);
+    }
 
-//     return "End of method";
-// }
+    try{
+        PreparedStatement insertInvoice = c.prepareStatement(query);
+        ResultSet rSet = insertInvoice.executeQuery();
+    } catch (SQLException x2){
+        System.out.println("Failed to insert Invoice" + x2);
+    }
+
+    return "End of method";
+}
 
 private void close(){
     try{
