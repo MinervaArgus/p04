@@ -1,6 +1,8 @@
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.io.*;
-
+import java.util.Date;
+import java.text.SimpleDateFormat;
 public class DataSource{
     Connection c = null;
 
@@ -20,6 +22,9 @@ public class DataSource{
 
 
 private String insertInvoice(String query) {
+    String dString = "21-07-2052 13:20:21";
+    SimpleDateFormat f = new SimpleDateFormat("dd - MM - yyyy HH:mm:ss" );
+    Date date = f.parse(dString);
     try{
         CallableStatement insertDog = c.prepareCall("{call insertDog(?,?,?,?,?)}");
         insertDog.setInt(1, 122);
