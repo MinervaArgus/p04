@@ -90,11 +90,11 @@ public class DataSource {
 
         try {//looks pretty good
             CallableStatement insertDog = c.prepareCall("{call insertDog(?,?,?,?,?)}");
-            insertDog.setInt(1, 122);
-            insertDog.setString(2, "Astroid");
-            insertDog.setInt(3, 301);
+            insertDog.setInt(1, dog_ID);
+            insertDog.setString(2, dog_name);
+            insertDog.setInt(3, owner_ID);
             insertDog.setDate(4, dog_dob);
-            insertDog.setString(5, "Rottweiler");
+            insertDog.setString(5, breed);
             insertDog.execute();
         } catch (SQLException e) {
             // System.out.println("Failed to insert Dog" + x1);
@@ -102,7 +102,9 @@ public class DataSource {
         }
 
         try {
-            PreparedStatement insertInvoice = c.prepareStatement(query);
+            PreparedStatement insertInvoice = c.prepareStatement(
+                "INSERT INTO Invoices (invoice_no, owner_id, dog_id, invoice_date, amount) VALUES ('" + invoice_no_s + "', '" + owner_ID_s + "',' " + dog_ID_s + "', TO_DATE('" + invoice_date_s + "', 'YYYY-MM-DD'), " + amount_s
+            );
             ResultSet rSet = insertInvoice.executeQuery();
         } catch (SQLException e) {
             // System.out.println("Failed to insert Invoice" + x2);
