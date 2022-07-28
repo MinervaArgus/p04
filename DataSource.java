@@ -126,8 +126,7 @@ public class DataSource {
 
     private java.sql.Date stringToSQLDate(String s) throws ParseException {
         //takes a string date in ISO 8601 and returns a java.sql.Date for it
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-        java.util.Date d = sdf.parse(s);
+        java.sql.Date d = Date.valueOf(s);
         System.out.println("Testing date function: " + d.toString());
         return new java.sql.Date(d.getTime());
     }
