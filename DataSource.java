@@ -9,7 +9,7 @@ import java.sql.Date;
 public class DataSource {
     Connection c = null;
 
-    public DataSource(String user, String pass) {
+    public DataSource(String user, String pass) throws SQLException{
         // this needs to throw an error but I'm not sure what
         // for some reason registering the driver doesn't work with VSCode's default
         // execution parameters

@@ -1,6 +1,7 @@
 
 //IO class for the project
 import java.io.*;
+import java.util.concurrent.TimeUnit;
 
 public class IO {
 
@@ -12,12 +13,12 @@ public class IO {
         // one-time method
         // passes creds back up to the Ctrl class...
         // ...which uses those creds to instantiate a database connection
-
         Console cl = System.console();
         // todo: better collection of username
+        print("Welcome to the J&J database interface!");
         String user = new String(cl.readPassword("Enter username: "));
         String pass = new String(cl.readPassword("Enter password for " + user + "@itec3: "));
-        return user + "$" + pass;
+        return user + "," + pass;
     }
 
     public String prompt() {
@@ -30,10 +31,12 @@ public class IO {
         // after invoice creation, return to this method
         // (if you quit, make sure to .close the DataSource)
 
-        // Would you like to quit (q) or insert an invoice (i)?
+        // 
         // Unrecognized input! Please type either "q" or "i"
 
-        return null;
+        print("Would you like to quit (q) or insert an invoice (i)?");
+
+        return "q";
     }
 
     public void print(String s) {

@@ -13,12 +13,20 @@ public class Ctrl {
 
         //start by creating a DB connection with DataSource
         String rawcreds = io.getUserCredentials();
-        String[] creds = rawcreds.split("$")
+        //System.out.println(rawcreds);
+        String[] creds = rawcreds.split(",");
+        /*
+        for(String sub : creds){
+            System.out.println("creds: " + sub);
+        }
+        */
         try{
             d = new DataSource(creds[0], creds[1]);
             io.print("Connection created to database!");
         }catch(Exception e){
+            //todo: handle different exceptions differently
             io.print("Could not load the database!\nPlease check your credentials and try again.\nError code: " + e);
+            start();
         }
 
         //move to a different method to handle recursion
