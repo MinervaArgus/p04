@@ -1,9 +1,9 @@
-public class Ctrl{
-/*
-    public Ctrl(){
-        //don't think we need anything here... but I need to test to make sure
-    }
-*/
+public class Ctrl {
+    /*
+     * public Ctrl(){
+     * //don't think we need anything here... but I need to test to make sure
+     * }
+     */
     private IO io;
     private DataSource d;
 
@@ -25,24 +25,24 @@ public class Ctrl{
         proceed();
     }
 
-    private void proceed(){
+    private void proceed() {
         String s = io.prompt();
-        //prompt should return either a formatted string to insert the statement
-        //or a q to signal that we should close the connection
-        if(s.equals("q")){
-            //quit
+        // prompt should return either a formatted string to insert the statement
+        // or a q to signal that we should close the connection
+        if (s.equals("q")) {
+            // quit
             io.print("Exiting...");
             d.close();
             System.exit(0);
         } else {
-            //insert a statement
+            // insert a statement
             String message = d.insertInvoice(s);
             io.print(message);
-            //end with recursion
+            // end with recursion
             proceed();
         }
-        
+
     }
 }
-//I know I'm breaking incremental development
-//but I'm the one to pay the consequences...
+// I know I'm breaking incremental development
+// but I'm the one to pay the consequences...
