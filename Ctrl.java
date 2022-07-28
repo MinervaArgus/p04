@@ -26,7 +26,7 @@ public class Ctrl {
         }catch(Exception e){
             //todo: handle different exceptions differently
             io.print("Could not load the database!\nPlease check your credentials and try again.\nError code: " + e);
-            start();
+            start();//creates a new IO class each time, address if time permits
         }
 
         //move to a different method to handle recursion
