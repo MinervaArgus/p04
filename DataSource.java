@@ -101,18 +101,17 @@ public class DataSource {
             return "Problem inserting the dog record into the database!\nHere's the error code: " + e;
         }
 
+        String pquery = "Failed to initialize query!";
         try {
-            PreparedStatement insertInvoice = c.prepareStatement(
-                "INSERT INTO Invoices (invoice_no, owner_id, dog_id, invoice_date, amount) VALUES ('" + invoice_no_s + "', '" + owner_ID_s + "',' " + dog_ID_s + "', TO_DATE('" + invoice_date_s + "', 'YYYY-MM-DD'), " + amount_s
-            );
+            pquery = "INSERT INTO Invoices (invoice_no, owner_id, dog_id, invoice_date, amount) VALUES ('" + invoice_no_s + "', '" + owner_ID_s + "', '" + dog_ID_s + "', TO_DATE('" + invoice_date_s + "', 'YYYY-MM-DD'), " + amount_s + ")";
+            PreparedStatement insertInvoice = c.prepareStatement(pquery);
             ResultSet rSet = insertInvoice.executeQuery();
         } catch (SQLException e) {
             // System.out.println("Failed to insert Invoice" + x2);
-            return "Problem inserting the invoice record into the database!\nHere's the error code: " + e;
+            return "Problem inserting the invoice record into the database!\nHere's the error code: " + e + "\n\nPlease also review the query to look for problems: " + pquery;
         }
 
-        // return "Invoice " + invoiceNo + " successfully created.";
-        return "You forgot to complete this method, dumbass!";
+        return "Dog and invoice records created successfully!";
     }
 
     public void close() {
@@ -129,6 +128,7 @@ public class DataSource {
         //takes a string date in ISO 8601 and returns a java.sql.Date for it
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
         java.util.Date d = sdf.parse(s);
+        System.out.println("Testing date function: " + d.toString());
         return new java.sql.Date(d.getTime());
     }
 }
