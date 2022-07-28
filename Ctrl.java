@@ -1,35 +1,32 @@
 public class Ctrl {
-    /*
-     * public Ctrl(){
-     * //don't think we need anything here... but I need to test to make sure
-     * }
-     */
+
     private IO io;
     private DataSource d;
 
-    public void start(){
-        //start the program
+    public void start() {
+        // start the program
         io = new IO();
 
-        //start by creating a DB connection with DataSource
+        // start by creating a DB connection with DataSource
         String rawcreds = io.getUserCredentials();
-        //System.out.println(rawcreds);
+        // System.out.println(rawcreds);
         String[] creds = rawcreds.split(",");
         /*
-        for(String sub : creds){
-            System.out.println("creds: " + sub);
-        }
-        */
-        try{
+         * for(String sub : creds){
+         * System.out.println("creds: " + sub);
+         * }
+         */
+        try {
             d = new DataSource(creds[0], creds[1]);
             io.print("Connection created to database!");
-        }catch(Exception e){
-            //todo: handle different exceptions differently
-            io.print("Could not load the database!\nPlease check your credentials and try again.\nError code: " + e);
-            start();//creates a new IO class each time, address if time permits
+        } catch (java.sql.SQLException e) {
+            io.print("Could not load the database!\nPlease check your credentials and connection and try again.\nError code: " + e);
+            start();// creates a new IO class each time, address if time permits
+        } catch (Exception e) {
+            io.print("Could not load the database!\nProbably a connection error.\nError code: " + e);
         }
 
-        //move to a different method to handle recursion
+        // move to a different method to handle recursion
         proceed();
     }
 
