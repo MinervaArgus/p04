@@ -65,15 +65,20 @@ public class DataSource {
             return "One or more of your entries were blank! Please try again.";
         }
 
+        java.sql.Date dog_dob;
+        java.sql.Date invoice_date;
+        double amount;
+        int dog_ID;
+        int owner_ID;
         //parse the strings as needed
         try {
-            java.util.Date dog_dob = stringToSQLDate(dog_DOB_s);
-            java.util.Date invoice_date = stringToSQLDate(invoice_date_s);
+            dog_dob = stringToSQLDate(dog_DOB_s);
+            invoice_date = stringToSQLDate(invoice_date_s);
 
-            double amount = Double.parseDouble(amount_s);
+            amount = Double.parseDouble(amount_s);
 
-            int dog_ID = Integer.parseInt(dog_ID_s);
-            int owner_ID = Integer.parseInt(owner_ID_s);
+            dog_ID = Integer.parseInt(dog_ID_s);
+            owner_ID = Integer.parseInt(owner_ID_s);
         } catch (ParseException e) {
             return "One or more of your entries were improperly formatted!\nPlease try again.\nError code: " + e;
             //todo: if time permits, split this for better error handling. Tell the user *where* the parse failed
@@ -83,12 +88,12 @@ public class DataSource {
         //String dString = "21-07-2052";
         //Date date = Date.valueOf(dString);
 
-        try {
+        try {//looks pretty good
             CallableStatement insertDog = c.prepareCall("{call insertDog(?,?,?,?,?)}");
             insertDog.setInt(1, 122);
             insertDog.setString(2, "Astroid");
             insertDog.setInt(3, 301);
-            insertDog.setDate("aDOB", date);
+            insertDog.setDate(4, dog_dob);
             insertDog.setString(5, "Rottweiler");
             insertDog.execute();
         } catch (SQLException e) {
