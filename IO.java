@@ -1,22 +1,17 @@
-
 //IO class for the project
 import java.io.*;
-import java.util.concurrent.TimeUnit;
 
 public class IO {
 
-    // todo: delete the constructor and see if this still works
-    public IO() {
-    }
+    Console cl = System.console();
 
     public String getUserCredentials() {
         // one-time method
         // passes creds back up to the Ctrl class...
         // ...which uses those creds to instantiate a database connection
-        Console cl = System.console();
         // todo: better collection of username
         print("Welcome to the J&J database interface!");
-        String user = new String(cl.readPassword("Enter username: "));
+        String user = new String(cl.readLine("Enter username: "));
         String pass = new String(cl.readPassword("Enter password for " + user + "@itec3: "));
         return user + "," + pass;
     }
@@ -34,9 +29,20 @@ public class IO {
         // 
         // Unrecognized input! Please type either "q" or "i"
 
-        print("Would you like to quit (q) or insert an invoice (i)?");
+        String response = new String(cl.readLine("Would you like to quit (q) or insert an invoice (i)?"));
+        if (response.equals("q")){
+            //pass it up the chain so Ctrl can quit the program
+            return response;
+        } else if (response.equals("i")){
+            //now prompt for invoice information before passing it up to Ctrl
+            return response;
+        } else {
+            print("Unrecognized input! Please type either \"q\" or \"i\"");
+            prompt();
+        }
+        print("If you're seeing this, then you need to check IO.prompt()");
+        return "Just putting this here to skirt around compilation issues";
 
-        return "q";
     }
 
     public void print(String s) {
