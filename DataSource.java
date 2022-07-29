@@ -31,10 +31,11 @@ public class DataSource {
         // use a callable statement to insert a dog...
         // not required to test (or handle) the case of a dog already existing
 
-        // when testing make sure there's an owner record in the db we can use
+        //HELLO DR. PITTGES
+        //Just wanted to say that I'm aware of the relative lack of input validation here
+        //I'm not sure how much of it ought to be handled by the java program and how much by constraints
 
-        // please also remember that we're working with transactions,
-        // so disable autocommit!
+        // when testing make sure there's an owner record in the db we can use
 
         String[] args = query.split(",");
         // try splitting the string
@@ -64,15 +65,15 @@ public class DataSource {
 
         java.sql.Date dog_dob;
         java.sql.Date invoice_date;
-        double amount;
+        //double amount; ended up using string. Don't parse what you don't have to!
         int dog_ID;
         int owner_ID;
         // parse the strings as needed
         try {
             dog_dob = stringToSQLDate(dog_DOB_s);
-            invoice_date = stringToSQLDate(invoice_date_s);
+            //invoice_date = stringToSQLDate(invoice_date_s);
 
-            amount = Double.parseDouble(amount_s);
+            //amount = Double.parseDouble(amount_s);
 
             dog_ID = Integer.parseInt(dog_ID_s);
             owner_ID = Integer.parseInt(owner_ID_s);
