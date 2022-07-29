@@ -15,11 +15,9 @@ public class DataSource {
         // for some reason registering the driver doesn't work with VSCode's default
         // execution parameters
         DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-        /*
-         * user = "jririe";
-         * pass = "mHtq5bXWy4_UGC4";
-         */
         c = DriverManager.getConnection("jdbc:oracle:thin:@Worf.radford.edu:1521:itec3", user, pass);
+        // what the fuck was I thinking publishing my creds like that... I hope Jackson
+        // keeps the repo private
     }
 
     public String insertInvoice(String query) {
@@ -33,16 +31,15 @@ public class DataSource {
         // use a callable statement to insert a dog...
         // not required to test (or handle) the case of a dog already existing
 
-        // make sure we have an owner record in the db and that the dog and invoice are
-        // removed each time
+        // when testing make sure there's an owner record in the db we can use
 
         // please also remember that we're working with transactions,
         // so disable autocommit!
 
         String[] args = query.split(",");
-        //try splitting the string
+        // try splitting the string
 
-        //needed to leave these outside the try/catch
+        // needed to leave these outside the try/catch
         String dog_ID_s;
         String dog_name;
         String owner_ID_s;
@@ -52,7 +49,7 @@ public class DataSource {
         String invoice_date_s;
         String amount_s;
 
-        try{
+        try {
             dog_ID_s = args[0];
             dog_name = args[1];
             owner_ID_s = args[2];
@@ -61,7 +58,7 @@ public class DataSource {
             invoice_no_s = args[5];
             invoice_date_s = args[6];
             amount_s = args[7];
-        } catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             return "One or more of your entries were blank! Please try again.";
         }
 
@@ -70,7 +67,7 @@ public class DataSource {
         double amount;
         int dog_ID;
         int owner_ID;
-        //parse the strings as needed
+        // parse the strings as needed
         try {
             dog_dob = stringToSQLDate(dog_DOB_s);
             invoice_date = stringToSQLDate(invoice_date_s);
@@ -81,14 +78,12 @@ public class DataSource {
             owner_ID = Integer.parseInt(owner_ID_s);
         } catch (ParseException e) {
             return "One or more of your entries were improperly formatted!\nPlease try again.\nError code: " + e;
-            //todo: if time permits, split this for better error handling. Tell the user *where* the parse failed
+            // todo: if time permits, split this for better error handling. Tell the user
+            // *where* the parse failed
         }
-        
 
-        //String dString = "21-07-2052";
-        //Date date = Date.valueOf(dString);
-
-        try {//looks pretty good
+        try {
+            c.setAutoCommit(false);
             CallableStatement insertDog = c.prepareCall("{call insertDog(?,?,?,?,?)}");
             insertDog.setInt(1, dog_ID);
             insertDog.setString(2, dog_name);
@@ -96,22 +91,37 @@ public class DataSource {
             insertDog.setDate(4, dog_dob);
             insertDog.setString(5, breed);
             insertDog.execute();
-        } catch (SQLException e) {
-            // System.out.println("Failed to insert Dog" + x1);
-            return "Problem inserting the dog record into the database!\nHere's the error code: " + e;
+            c.commit();
+        } catch (SQLException e1) {
+            try {
+                c.rollback();
+                return "Problem inserting the dog record into the database!\nHere's the error code: " + e1;
+            } catch (SQLException e2) {
+                return "Failed to roll back the dog transaction! Please contact a database admin!\nError code: " + e2;
+            }
         }
 
-        String pquery = "Failed to initialize query!";
+        String pquery = "Failed to initialize query!";// this shows if the code somehow fails...
         try {
-            pquery = "INSERT INTO Invoices (invoice_no, owner_id, dog_id, invoice_date, amount) VALUES ('" + invoice_no_s + "', '" + owner_ID_s + "', '" + dog_ID_s + "', TO_DATE('" + invoice_date_s + "', 'YYYY-MM-DD'), " + amount_s + ")";
+            pquery = "INSERT INTO Invoices (invoice_no, owner_id, dog_id, invoice_date, amount) VALUES ('"
+                    + invoice_no_s + "', '" + owner_ID_s + "', '" + dog_ID_s + "', TO_DATE('" + invoice_date_s
+                    + "', 'YYYY-MM-DD'), " + amount_s + ")";
             PreparedStatement insertInvoice = c.prepareStatement(pquery);
             ResultSet rSet = insertInvoice.executeQuery();
-        } catch (SQLException e) {
-            // System.out.println("Failed to insert Invoice" + x2);
-            return "Problem inserting the invoice record into the database!\nHere's the error code: " + e + "\n\nPlease also review the query to look for problems: " + pquery;
+            c.commit();
+        } catch (SQLException e1) {
+            try {
+                c.rollback();
+                return "Problem inserting the invoice record into the database!\nHere's the error code: " + e1
+                        + "\n\nPlease also review the query to look for problems: " + pquery;
+            } catch (SQLException e2) {
+                return "Failed to roll back the invoice transaction! Please contact a database admin!\nError code: "
+                        + e2;
+            }
         }
 
-        return "Dog and invoice records created successfully!";
+        return "Successfully created record for dog with ID number" + dog_ID + "\nSuccessfully created invoice number"
+                + invoice_no_s;
     }
 
     public void close() {
@@ -125,9 +135,12 @@ public class DataSource {
     }
 
     private java.sql.Date stringToSQLDate(String s) throws ParseException {
-        //takes a string date in ISO 8601 and returns a java.sql.Date for it
+        // takes a string date in ISO 8601 and returns a java.sql.Date for it
+        // I wrote this method when I thought I'd need to convert to Unix millis and
+        // back...
+
         java.sql.Date d = Date.valueOf(s);
-        System.out.println("Testing date function: " + d.toString());
+        // System.out.println("Testing date function: " + d.toString());
         return new java.sql.Date(d.getTime());
     }
 }
