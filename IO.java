@@ -47,7 +47,7 @@ public class IO {
 
             //gather invoice record data
             String invoice_no = new String(cl.readLine("Enter the invoice number: "));//todo: autogenerate number?
-            String invoice_date = new String(cl.readLine("Enter the date of the invoice (ISO 8601, YYYY-MM-DD): "));
+            String invoice_date = new String(cl.readLine("Enter the date of the invoice (YYYY-MM-DD): "));
             //todo: leave blank for current date?
             //I also need to think carefully about date parsing here...
             String amount = new String(cl.readLine("Enter the amount due on the invoice: "));
