@@ -69,7 +69,7 @@ public class DataSource {
         int dog_ID;
         int owner_ID;
         // parse the strings as needed
-        
+
         try {
             dog_dob = stringToSQLDate(dog_DOB_s);
             //invoice_date = stringToSQLDate(invoice_date_s);
@@ -87,7 +87,7 @@ public class DataSource {
         }
 
         try {
-            dog_ID = Integer.parseInt(owner_ID_s);
+            owner_ID = Integer.parseInt(owner_ID_s);
         } catch (Exception e){
             return "Invalid Format for OwnerID!\nPlease try again.\nError code: " + e;
         }
