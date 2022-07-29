@@ -64,23 +64,32 @@ public class DataSource {
         }
 
         java.sql.Date dog_dob;
-        java.sql.Date invoice_date;
+        // java.sql.Date invoice_date;
         //double amount; ended up using string. Don't parse what you don't have to!
         int dog_ID;
         int owner_ID;
         // parse the strings as needed
+        
         try {
             dog_dob = stringToSQLDate(dog_DOB_s);
             //invoice_date = stringToSQLDate(invoice_date_s);
-
             //amount = Double.parseDouble(amount_s);
-
-            dog_ID = Integer.parseInt(dog_ID_s);
-            owner_ID = Integer.parseInt(owner_ID_s);
         } catch (ParseException e) {
-            return "One or more of your entries were improperly formatted!\nPlease try again.\nError code: " + e;
+            return "Invalid Format for DogDOB!\nPlease try again.\nError code: " + e;
             // todo: if time permits, split this for better error handling. Tell the user
             // *where* the parse failed
+        }
+
+        try {
+            dog_ID = Integer.parseInt(dog_ID_s);
+        } catch (Exception e){
+            return "Invalid Format for DogID!\nPlease try again.\nError code: " + e;
+        }
+
+        try {
+            dog_ID = Integer.parseInt(owner_ID_s);
+        } catch (Exception e){
+            return "Invalid Format for OwnerID!\nPlease try again.\nError code: " + e;
         }
 
         try {
